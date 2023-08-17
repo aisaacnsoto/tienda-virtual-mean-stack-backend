@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
     // Modifica cada producto para que la propiedad "foto" sea una URL completa
     productos.forEach(producto => {
       if (producto.foto) {
-        producto.foto = `${req.protocol}://${req.get('host')}/uploads/${path.basename(producto.foto)}`;
+        producto.foto = `https://tienda-virtual-mean-stack-backend.onrender.com/uploads/${path.basename(producto.foto)}`;
       }
     });
     
