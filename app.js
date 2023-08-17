@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Conexión a la base de datos
-const mongoURI = 'mongodb://127.0.0.1:27017/tienda-virtual-mean-stack';
+const mongoURI = 'mongodb+srv://aisaacnsoto:aEte8WbTeJod0AZl@cluster0.dm5rujk.mongodb.net/tienda-virtual-mean-stack';
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -41,6 +41,4 @@ app.use('/uploads', express.static('uploads'));
 
 // Iniciar el servidor
 const port = 3000;
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
-});
+app.listen(port);
