@@ -17,7 +17,7 @@ const createTrans = () => {
     return transporter;
 }
 
-const sendMail = async (mailOptions, attachment, attachmentName) => {
+const sendMail = async (mailOptions) => {
     const transporter = createTrans();
     const info = await transporter.sendMail({
         from: '"TIENDA DE PRUEBA" <test@test.com>', // sender address
@@ -25,12 +25,12 @@ const sendMail = async (mailOptions, attachment, attachmentName) => {
         subject: mailOptions.subject, // Subject line
         text: mailOptions.text, // plain text body
         html: mailOptions.html, // html body
-        attachments: [
-            {
-                content: attachment,
-                filename: attachmentName,
-            }
-        ]
+        // attachments: [
+        //     {
+        //         content: attachment,
+        //         filename: attachmentName,
+        //     }
+        // ]
     });
 
     return info.messageId;

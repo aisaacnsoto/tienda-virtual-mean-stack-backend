@@ -58,14 +58,14 @@ const executePayment = (req, res) => {
   axios.post(`${process.env.PAYPAL_API_URL}/v2/checkout/orders/${token}/capture`, {}, { auth })
     .then(async (paypalResponse) => {
       try {
-        let pdf = await generatePdf(pdfHTML);
+        // let pdf = await generatePdf(pdfHTML);
 
         let idMail = await sendMail({
           to: customer.email,
           subject: 'Confirmación de compra',
           text: 'Compra procesada correctamente',
           html: `Hola ${customer.name}. Tu compra de $${totalCompra} ha sido procesada correctamente. Adjuntamos tu recibo. Muchas gracias por tu preferencia.`,
-        }, pdf, nombrePdf);
+        });
 
         console.log(`Email enviado a '${customer.email}' ==> ${idMail}`);
 
