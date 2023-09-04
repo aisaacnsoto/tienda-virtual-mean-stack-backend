@@ -3,17 +3,18 @@ require('dotenv').config();
 const path = require('path');
 
 const Producto = require('../models/producto');
+const S3 = require('../config/s3');
 
 const getProducts = async (req, res) => {
     try {
         const productos = await Producto.find();
-
+        
         // Modifica cada producto para que la propiedad "foto" sea una URL completa
-        productos.forEach(producto => {
-            if (producto.foto) {
-                producto.foto = `${process.env.BACKEND_URL}/uploads/${path.basename(producto.foto)}`;
-            }
-        });
+        // productos.forEach(producto => {
+        //     if (producto.foto) {
+        //         producto.foto = `${process.env.BACKEND_URL}/uploads/${path.basename(producto.foto)}`;
+        //     }
+        // });
 
         res.json(productos);
     } catch (error) {
@@ -26,16 +27,20 @@ const getProduct = (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-    const producto = new Producto({
-        nombre: req.body.nombre,
-        precio: req.body.precio,
-        descripcion: req.body.descripcion,
-        categoria: req.body.categoria,
-        foto: req.file.path
-    });
 
     try {
-        const nuevoProducto = await producto.save();
+        await S3.uploadFile(req.file);
+        let url = await S3.getFileURL(req.file.originalname);
+
+        const producto = new Producto({
+            nombre: req.body.nombre,
+            precio: req.body.precio,
+            descripcion: req.body.descripcion,
+            categoria: req.body.categoria,
+            foto: url
+        });
+
+        let nuevoProducto = await producto.save();
         res.status(201).json(nuevoProducto);
     } catch (error) {
         res.status(400).json({ message: error.message });
