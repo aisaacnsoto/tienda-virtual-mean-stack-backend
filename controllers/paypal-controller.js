@@ -64,7 +64,7 @@ const executePayment = (req, res) => {
           to: customer.email,
           subject: 'Confirmación de compra',
           text: 'Compra procesada correctamente',
-          html: `Hola ${customer.name}. Tu compra de $${totalCompra} ha sido procesada correctamente. Adjuntamos tu recibo. Muchas gracias por tu preferencia.`,
+          html: `Hola ${customer.name}. Tu compra de $${totalCompra} ha sido procesada correctamente. Muchas gracias por tu preferencia.`,
         });
 
         console.log(`Email enviado a '${customer.email}' ==> ${idMail}`);
