@@ -29,6 +29,7 @@ const getProduct = (req, res) => {
 const createProduct = async (req, res) => {
 
     try {
+        console.log('req.file',req.file);
         await S3.uploadFile(req.file);
         let url = await S3.getFileURL(req.file.originalname);
 
@@ -43,6 +44,7 @@ const createProduct = async (req, res) => {
         let nuevoProducto = await producto.save();
         res.status(201).json(nuevoProducto);
     } catch (error) {
+        console.log('error',error);
         res.status(400).json({ message: error.message });
     }
 };
